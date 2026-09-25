@@ -1,8 +1,6 @@
-# Protocolos Clínicos - Facies Dentium
-
 <div id="sec-guia-usuario" style="scroll-margin-top: 80px;"></div>
 
-## Guía del Usuario
+## Guía del Usuario y Descargo de Responsabilidad
 - Esta guía es un compendio de algoritmos prácticos para el dentista: está diseñada como una ayuda y no como un sustituto del juicio clínico.
 - El uso óptimo de los medicamentos cambia rápidamente con el tiempo. Por lo tanto, es importante entender que la información se actualizará anualmente para incorporar los avances en los campos dental y médico.
 - El Kit Avanzado está diseñado específicamente para consultorios dentales con la capacidad de administrar medicamentos de ACLS (Soporte Vital Cardiovascular Avanzado) según el protocolo.
@@ -37,215 +35,9 @@
 </tbody>
 </table>
 
-<div id="sec-derechos-autor" style="scroll-margin-top: 80px;"></div>
-
-## Derechos de Autor y Descargo de Responsabilidad
-- Límite de Responsabilidad/Descargo de Garantía: Si bien los autores han hecho su mejor esfuerzo al preparar este material, no hacen declaraciones respecto a la integridad del contenido y renuncian específicamente a la aplicabilidad de cualquiera de las recomendaciones a una situación clínica dada, en vista del alto grado de variabilidad entre los pacientes.
+### Derechos de Autor y Descargo de Responsabilidad
+- **Límite de Responsabilidad / Descargo de Garantía:** Si bien los autores han hecho su mejor esfuerzo al preparar este material, no hacen declaraciones respecto a la integridad del contenido y renuncian específicamente a la aplicabilidad de cualquiera de las recomendaciones a una situación clínica dada, en vista del alto grado de variabilidad entre los pacientes.
 - Es imperativo el uso del juicio clínico profesional por parte del odontólogo tratante en cada situación individual.
-
-
-
-<div id="sec-acceso-rapido" style="scroll-margin-top: 80px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin: 24px 0 32px 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-<div style="font-weight: bold; font-size: 1.15em; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-<span style="font-size: 1.3em;">📑</span> Acceso Rápido por Protocolo Clínico
-</div>
-<div style="font-size: 0.88em; color: #64748b; margin-bottom: 14px;">
-Haz clic en cualquier pestaña o botón para desplazarte instantáneamente al protocolo de emergencia:
-</div>
-
-<div style="margin-bottom: 12px;">
-<div style="font-size: 0.82em; font-weight: bold; color: #dc2626; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">❤️ Cardiovasculares y Paro</div>
-<div style="display: flex; flex-wrap: wrap; gap: 6px;">
-<a href="#sec-paro-cardiopulmonar" style="display: inline-block; padding: 6px 12px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Paro Cardiopulmonar</a>
-<a href="#sec-paro-farmacos" style="display: inline-block; padding: 6px 12px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Fármacos en Paro</a>
-<a href="#sec-dolor-pecho" style="display: inline-block; padding: 6px 12px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Dolor en el Pecho</a>
-<a href="#sec-angina" style="display: inline-block; padding: 6px 12px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Angina</a>
-<a href="#sec-infarto" style="display: inline-block; padding: 6px 12px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Infarto (IAM)</a>
-<a href="#sec-embolia-pulmonar" style="display: inline-block; padding: 6px 12px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Embolia Pulmonar</a>
-<a href="#sec-bradicardia" style="display: inline-block; padding: 6px 12px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Bradicardia</a>
-<a href="#sec-taquicardia" style="display: inline-block; padding: 6px 12px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Taquicardia</a>
-<a href="#sec-hipotension" style="display: inline-block; padding: 6px 12px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Hipotensión</a>
-</div>
-</div>
-
-<div style="margin-bottom: 12px;">
-<div style="font-size: 0.82em; font-weight: bold; color: #0284c7; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">🫁 Respiratorias</div>
-<div style="display: flex; flex-wrap: wrap; gap: 6px;">
-<a href="#sec-falta-aire" style="display: inline-block; padding: 6px 12px; background-color: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Falta de Aire (Disnea)</a>
-<a href="#sec-hiperventilacion" style="display: inline-block; padding: 6px 12px; background-color: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Hiperventilación</a>
-<a href="#sec-asma" style="display: inline-block; padding: 6px 12px; background-color: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Asma</a>
-<a href="#sec-epoc" style="display: inline-block; padding: 6px 12px; background-color: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">EPOC</a>
-<a href="#sec-icc" style="display: inline-block; padding: 6px 12px; background-color: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Insuficiencia Cardíaca</a>
-<a href="#sec-obstruccion" style="display: inline-block; padding: 6px 12px; background-color: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Obstrucción Vía Aérea</a>
-</div>
-</div>
-
-<div style="margin-bottom: 12px;">
-<div style="font-size: 0.82em; font-weight: bold; color: #ea580c; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">⚠️ Alergias y Anafilaxia</div>
-<div style="display: flex; flex-wrap: wrap; gap: 6px;">
-<a href="#sec-alergia-leve" style="display: inline-block; padding: 6px 12px; background-color: #ffedd5; color: #c2410c; border: 1px solid #fdba74; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Alergia Leve</a>
-<a href="#sec-alergia-severa" style="display: inline-block; padding: 6px 12px; background-color: #ffedd5; color: #c2410c; border: 1px solid #fdba74; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Alergia Severa (Anafilaxia)</a>
-</div>
-</div>
-
-<div style="margin-bottom: 12px;">
-<div style="font-size: 0.82em; font-weight: bold; color: #d97706; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">🧠 Alteración del Estado Mental</div>
-<div style="display: flex; flex-wrap: wrap; gap: 6px;">
-<a href="#sec-estado-mental" style="display: inline-block; padding: 6px 12px; background-color: #fef3c7; color: #b45309; border: 1px solid #fcd34d; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Evaluación General</a>
-<a href="#sec-desmayo-simple" style="display: inline-block; padding: 6px 12px; background-color: #fef3c7; color: #b45309; border: 1px solid #fcd34d; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Desmayo Simple (Síncope)</a>
-<a href="#sec-hipoglucemia" style="display: inline-block; padding: 6px 12px; background-color: #fef3c7; color: #b45309; border: 1px solid #fcd34d; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Hipoglucemia</a>
-<a href="#sec-acv" style="display: inline-block; padding: 6px 12px; background-color: #fef3c7; color: #b45309; border: 1px solid #fcd34d; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Accidente Cerebrovascular</a>
-<a href="#sec-convulsiones" style="display: inline-block; padding: 6px 12px; background-color: #fef3c7; color: #b45309; border: 1px solid #fcd34d; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Convulsiones</a>
-</div>
-</div>
-
-<div>
-<div style="font-size: 0.82em; font-weight: bold; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">📋 Preparación General</div>
-<div style="display: flex; flex-wrap: wrap; gap: 6px;">
-<a href="#sec-roles-equipo" style="display: inline-block; padding: 6px 12px; background-color: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Roles del Equipo</a>
-<a href="#sec-equipo-farmacos" style="display: inline-block; padding: 6px 12px; background-color: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.85em; font-weight: 600; text-decoration: none; transition: all 0.2s;">Equipo y Fármacos</a>
-</div>
-</div>
-</div>
-
-<div id="sec-tabla-contenidos" style="scroll-margin-top: 80px;"></div>
-
-## Tabla de Contenidos
-
-<table style="border-collapse: collapse; width: 100%;">
-<thead>
-<tr>
-<th style="border: 1px solid #000; padding: 8px; text-align: left; background-color: #f1f5f9;">Pestañas</th>
-<th style="border: 1px solid #000; padding: 8px; text-align: left; background-color: #f1f5f9;">Secciones</th>
-<th style="border: 1px solid #000; padding: 8px; text-align: left; background-color: #f1f5f9;">Página #</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;" rowspan="3"><strong>Preparación para Emergencias</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Guía del Usuario</td>
-<td style="border: 1px solid #000; padding: 8px;">1</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Rol de los Miembros del Equipo en una Emergencia Médica</td>
-<td style="border: 1px solid #000; padding: 8px;">2</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Equipamiento de Emergencia<br>Los Únicos Medicamentos de Emergencia que Debería Necesitar</td>
-<td style="border: 1px solid #000; padding: 8px;">2<br>3</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;" rowspan="4"><strong>Paro Cardiopulmonar</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Rol del Dentista</td>
-<td style="border: 1px solid #000; padding: 8px;">3</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Rol del Asistente</td>
-<td style="border: 1px solid #000; padding: 8px;">3</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Rol de Otros Miembros del Equipo</td>
-<td style="border: 1px solid #000; padding: 8px;">4</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Paro Cardiopulmonar: Protocolos de Fármacos</td>
-<td style="border: 1px solid #000; padding: 8px;">5</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;" rowspan="3"><strong>Dolor en el Pecho</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Evaluación del Paciente que se Presenta con Dolor en el Pecho</td>
-<td style="border: 1px solid #000; padding: 8px;">6</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Angina</td>
-<td style="border: 1px solid #000; padding: 8px;">7</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia del Infarto de Miocardio en Evolución<br>Manejo de Emergencia de la Embolia Pulmonar</td>
-<td style="border: 1px solid #000; padding: 8px;">8<br>9</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;" rowspan="5"><strong>Falta de Aire</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Evaluación del Paciente que se Presenta con Falta de Aire</td>
-<td style="border: 1px solid #000; padding: 8px;">10</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Hiperventilación</td>
-<td style="border: 1px solid #000; padding: 8px;">11</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia del Asma</td>
-<td style="border: 1px solid #000; padding: 8px;">12</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Exacerbación Aguda de la EPOC</td>
-<td style="border: 1px solid #000; padding: 8px;">13</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Insuficiencia Cardíaca Congestiva<br>Manejo de Emergencia de la Obstrucción de la Vía Aérea por Cuerpo Extraño</td>
-<td style="border: 1px solid #000; padding: 8px;">14<br>15</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;"><strong>Bradicardia</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Bradicardia</td>
-<td style="border: 1px solid #000; padding: 8px;">16</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;"><strong>Taquicardia</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Taquicardia</td>
-<td style="border: 1px solid #000; padding: 8px;">17</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;"><strong>Hipotensión</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Hipotensión</td>
-<td style="border: 1px solid #000; padding: 8px;">18</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;" rowspan="2"><strong>Reacción Alérgica</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Reacción Alérgica Leve</td>
-<td style="border: 1px solid #000; padding: 8px;">19</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Reacción Alérgica Severa</td>
-<td style="border: 1px solid #000; padding: 8px;">20</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;" rowspan="5"><strong>Estado Mental Alterado</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Evaluación del Paciente que se Presenta con Estado Mental Alterado</td>
-<td style="border: 1px solid #000; padding: 8px;">21</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia del Síncope Vasovagal (Desmayo Simple)</td>
-<td style="border: 1px solid #000; padding: 8px;">22</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Hipoglucemia</td>
-<td style="border: 1px solid #000; padding: 8px;">23</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia del Accidente Cerebrovascular (ACV)</td>
-<td style="border: 1px solid #000; padding: 8px;">24</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Manejo de Emergencia de la Convulsión</td>
-<td style="border: 1px solid #000; padding: 8px;">25</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;" rowspan="2"><strong>Biografías de los Autores</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Leslie S.T. Fang, MD PhD</td>
-<td style="border: 1px solid #000; padding: 8px;">26</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;">Tracey Menhall, BSc, MS, CPA</td>
-<td style="border: 1px solid #000; padding: 8px;">27</td>
-</tr>
-<tr>
-<td style="border: 1px solid #000; padding: 8px;"><strong>Formulario de Pedido</strong></td>
-<td style="border: 1px solid #000; padding: 8px;">Cómo Ordenar</td>
-<td style="border: 1px solid #000; padding: 8px;"></td>
-</tr>
-</tbody>
-</table>
 
 <div id="sec-roles-equipo" style="scroll-margin-top: 80px;"></div>
 
@@ -388,26 +180,22 @@ Haz clic en cualquier pestaña o botón para desplazarte instantáneamente al pr
 ## Paro Cardiopulmonar
 
 <table style="border-collapse: separate; border-spacing: 70px 0; width: 100%; table-layout: fixed;">
-<colgroup>
-<col style="width: 40%">
-<col style="width: 60%">
-</colgroup>
+<colgroup><col style="width: 40%"><col style="width: 60%"></colgroup>
 <tr>
 <td style="vertical-align: top; padding: 0;">
-<table style="border-collapse: collapse; width: 100%;">
+<table style="border-collapse: collapse; width: 100%; margin-bottom: 8px;">
 <tr><td style="border: 2px solid #ef4444; background-color: #ef4444; color: white; padding: 6px 8px; font-weight: bold; font-size: 0.9em;">Paro Cardiopulmonar: Cese de función cardíaca y respiratoria</td></tr>
 </table>
-<br>
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 8px; text-align: center; font-size: 1.05em; font-weight: bold; font-style: italic; background-color: #ef4444; color: white;">Diagnóstico</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; font-weight: bold; font-size: 0.95em;">1. El paciente está inconsciente</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; font-weight: bold; font-size: 0.95em;">2. Sienta el pulso carotídeo:<br>&nbsp;&nbsp;&nbsp;No hay pulso carotídeo</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; font-weight: bold; font-size: 0.95em;">3. Verifique la respiración:<br>&nbsp;&nbsp;&nbsp;No hay respiración</td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 6px 0;">
-<svg width="18" height="34" viewBox="0 0 18 34">
-<line x1="9" y1="0" x2="9" y2="24" stroke="black" stroke-width="2.5"/>
-<polygon points="2,22 9,33 16,22" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table id="paro-origen" style="border-collapse: collapse; width: 100%;">
@@ -454,25 +242,21 @@ Dirija al personal de EMS a la ubicación apropiada
 ## Paro Cardiopulmonar: Protocolo de Fármacos
 
 <table style="border-collapse: separate; border-spacing: 70px 0; width: 100%; table-layout: fixed;">
-<colgroup>
-<col style="width: 40%">
-<col style="width: 60%">
-</colgroup>
+<colgroup><col style="width: 40%"><col style="width: 60%"></colgroup>
 <tr>
 <td style="vertical-align: top; padding: 0;">
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #ef4444; background-color: #ef4444; color: white; padding: 6px 8px; font-weight: bold; font-size: 0.9em;">Paro Cardiopulmonar: Cese de función cardíaca y respiratoria</td></tr>
 </table>
-<br>
 <table id="farmacos-analice-ritmo" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; background-color: #ef4444; color: white; padding: 8px; font-weight: bold; font-style: italic; text-align: center; font-size: 1.05em;">Analice el ritmo</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; font-weight: bold; font-size: 0.9em; text-align: center;">Ritmo desfibrilable<br>Fibrilación Ventricular o<br>Taquicardia Ventricular (TV/FV)</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; font-weight: bold; font-size: 0.9em; text-align: center;">Ritmo no desfibrilable<br>AEP (Actividad Eléctrica Sin Pulso) o Asistolia</td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 6px 0;">
-<svg width="18" height="34" viewBox="0 0 18 34">
-<line x1="9" y1="0" x2="9" y2="24" stroke="black" stroke-width="2.5"/>
-<polygon points="2,22 9,33 16,22" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table id="farmacos-linea-iv" style="border-collapse: collapse; width: 100%;">
@@ -480,10 +264,10 @@ Dirija al personal de EMS a la ubicación apropiada
 <tr><td style="border: 2px solid #000; padding: 8px; font-weight: bold; font-size: 0.9em; text-align: center;">Al menos calibre #18 IV</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; font-weight: bold; font-size: 0.9em; text-align: center;">Inicie infusión amplia<br>Infusión de Solución Salina Normal</td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 6px 0;">
-<svg width="18" height="34" viewBox="0 0 18 34">
-<line x1="9" y1="0" x2="9" y2="24" stroke="black" stroke-width="2.5"/>
-<polygon points="2,22 9,33 16,22" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -521,10 +305,7 @@ Dirija al personal de EMS a la ubicación apropiada
 ## Evaluación del Paciente con Dolor en el Pecho
 
 <table style="border-collapse: separate; border-spacing: 70px 0; width: 100%; table-layout: fixed;">
-<colgroup>
-<col style="width: 40%">
-<col style="width: 60%">
-</colgroup>
+<colgroup><col style="width: 40%"><col style="width: 60%"></colgroup>
 <tr>
 <td style="vertical-align: top; padding: 0;">
 <table id="dolor-pecho-box" style="border-collapse: collapse; width: 100%;">
@@ -532,10 +313,10 @@ Dirija al personal de EMS a la ubicación apropiada
 <tr><td style="border: 2px solid #000; background-color: #f97316; padding: 8px; font-weight: bold; font-size: 1.05em; font-style: italic;">1. Dolor Cardíaco</td></tr>
 <tr><td style="border: 2px solid #000; background-color: #eab308; padding: 8px; font-weight: bold; font-size: 1.05em; font-style: italic;">2. Dolor No Cardíaco</td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -608,7 +389,6 @@ Dirija al personal de EMS a la ubicación apropiada
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Angina: dolor en el pecho como resultado de que la demanda miocárdica supera el suministro de oxígeno al corazón</td></tr>
 </table>
-<br>
 <table id="angina-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
@@ -617,10 +397,10 @@ Dirija al personal de EMS a la ubicación apropiada
 <strong>Los síntomas son precipitados por el estrés y a menudo se autolimitan</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -665,7 +445,6 @@ Si el dolor no se alivia después de 5 minutos:<br>
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Infarto de miocardio: resultado de lesión incurrida como resultado de isquemia prolongada en el corazón</td></tr>
 </table>
-<br>
 <table id="infarto-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #ef4444; color: white; font-size: 0.85em; line-height: 1.35;">
@@ -675,10 +454,10 @@ Si el dolor no se alivia después de 5 minutos:<br>
 <strong>El paciente puede tener náuseas y vómitos</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -722,7 +501,6 @@ Si el dolor no se alivia después de 5 minutos:<br>
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Embolia pulmonar: embolización de un coágulo al pulmón con infarto resultante de una sección del pulmón<br>El origen del coágulo suele estar en la extremidad inferior con trombosis venosa profunda</td></tr>
 </table>
-<br>
 <table id="embolia-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
@@ -730,10 +508,10 @@ Si el dolor no se alivia después de 5 minutos:<br>
 <strong>Falta de aire</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -767,10 +545,7 @@ Cada vez que se sospeche de embolia pulmonar clínicamente:<br>
 ## Evaluación del Paciente con Falta de Aire
 
 <table style="border-collapse: separate; border-spacing: 70px 0; width: 100%; table-layout: fixed;">
-<colgroup>
-<col style="width: 40%">
-<col style="width: 60%">
-</colgroup>
+<colgroup><col style="width: 40%"><col style="width: 60%"></colgroup>
 <tr>
 <td style="vertical-align: top; padding: 0;">
 <table id="falta-aire-box" style="border-collapse: collapse; width: 100%;">
@@ -779,10 +554,10 @@ Cada vez que se sospeche de embolia pulmonar clínicamente:<br>
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.95em; font-style: italic; background-color: #facc15;">2. Causas Pulmonares</td></tr>
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.95em; font-style: italic; background-color: #f97316;">3. Causas Cardíacas</td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -858,7 +633,6 @@ Los síntomas se resuelven a medida que disminuye el nivel de ansiedad
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Hiperventilación: ventilación excesivamente rápida debido a la ansiedad</td></tr>
 </table>
-<br>
 <table id="hiperventilacion-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #84cc16; font-size: 0.85em; line-height: 1.35;">
@@ -871,10 +645,10 @@ Los síntomas se resuelven a medida que disminuye el nivel de ansiedad
 <strong>Sin evidencia de sibilancias</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -917,7 +691,6 @@ Si los síntomas son refractarios al tratamiento inicial:<br>
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Asma: estrechamiento episódico y reversible de las vías respiratorias que resulta en falta de aire aguda y sibilancias<br>El paciente tiene una predisposición genética pero los síntomas pueden ser precipitados por el estrés</td></tr>
 </table>
-<br>
 <table id="asma-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
@@ -926,10 +699,10 @@ Si los síntomas son refractarios al tratamiento inicial:<br>
 <strong>El paciente prefiere sentarse derecho</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -974,7 +747,6 @@ Si el asma es refractaria al tratamiento inicial:<br>
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Enfermedad Pulmonar Obstructiva Crónica (EPOC): enfermedad debida a afección persistente de las vías respiratorias<br>El paciente puede tener bronquitis crónica o enfisema</td></tr>
 </table>
-<br>
 <table id="epoc-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
@@ -984,10 +756,10 @@ Si el asma es refractaria al tratamiento inicial:<br>
 <strong>El paciente prefiere sentarse derecho</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -1031,7 +803,6 @@ Si la EPOC es refractaria al tratamiento inicial:<br>
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Insuficiencia cardíaca congestiva: Incapacidad del corazón para suministrar una cantidad adecuada de sangre oxigenada para satisfacer las demandas metabólicas del cuerpo, resultando en insuficiencia del corazón izquierdo y congestión pulmonar</td></tr>
 </table>
-<br>
 <table id="icc-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
@@ -1041,10 +812,10 @@ Si la EPOC es refractaria al tratamiento inicial:<br>
 <strong>El paciente prefiere sentarse erguido</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -1089,7 +860,6 @@ Si los síntomas no se resuelven en 5 minutos:<br>
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Obstrucción de la Vía Aérea por Cuerpo Extraño: Compromiso agudo de las vías respiratorias superiores secundario a la obstrucción por un cuerpo extraño</td></tr>
 </table>
-<br>
 <table id="obstruccion-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
@@ -1103,10 +873,10 @@ Si los síntomas no se resuelven en 5 minutos:<br>
 <strong>Falta de respuesta</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -1151,27 +921,26 @@ Si el paciente no responde:<br>
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Bradicardia: frecuencia del pulso inferior a 60 latidos por minuto</td></tr>
 </table>
-<br>
 <table id="bradicardia-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
-<tr><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
+<tr id="bradi-sym-orange"><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
 <strong>El paciente a menudo tiene antecedentes cardíacos</strong><br>
 <strong>El paciente puede quejarse de mareos o aturdimiento</strong>
 </td></tr>
-<tr><td style="border: 2px solid #000; padding: 8px; background-color: #ef4444; color: #ffffff; font-size: 0.85em; line-height: 1.35;">
+<tr id="bradi-sym-red"><td style="border: 2px solid #000; padding: 8px; background-color: #ef4444; color: #ffffff; font-size: 0.85em; line-height: 1.35;">
 <strong style="color: #ffffff;">El paciente puede desarrollar pérdida del conocimiento</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table id="bradicardia-frecuencia" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Evalúe la Frecuencia</td></tr>
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #f97316;">Frecuencia cardíaca de 40 a 60 latidos por minuto</td></tr>
-<tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #ef4444; color: #ffffff;">
+<tr id="bradi-rate-under40"><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #ef4444; color: #ffffff;">
 <strong style="color: #ffffff;">Frecuencia cardíaca por debajo de 40 latidos por minuto</strong>
 </td></tr>
 </table>
@@ -1182,9 +951,9 @@ Si el paciente no responde:<br>
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #f97316;">Detenga todos los procedimientos dentales</td></tr>
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #f97316;">Permita que el paciente se acueste cómodamente</td></tr>
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #f97316;">Administre oxígeno</td></tr>
-<tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #f97316;">Monitoree la presión arterial y el pulso</td></tr>
-<tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #ef4444; color: #ffffff;">Inicie acceso IV o IO si está capacitado</td></tr>
-<tr><td style="border: 2px solid #000; padding: 8px; font-weight: bold; font-size: 0.85em; line-height: 1.4; background-color: #ef4444; color: #ffffff;">
+<tr id="bradi-row-pulso"><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #f97316;">Monitoree la presión arterial y el pulso</td></tr>
+<tr id="bradi-row-iv"><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.85em; background-color: #ef4444; color: #ffffff;">Inicie acceso IV o IO si está capacitado</td></tr>
+<tr id="bradi-row-atropina"><td style="border: 2px solid #000; padding: 8px; font-weight: bold; font-size: 0.85em; line-height: 1.4; background-color: #ef4444; color: #ffffff;">
 Si el paciente no tolera la bradicardia, administre 0.5 mg de atropina IV / IO<br>
 Puede repetir atropina cada 5 minutos<br>
 Considere marcapasos externo si está disponible<br>
@@ -1211,7 +980,6 @@ Transfiera a la Sala de Emergencias tan pronto como sea posible
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Taquicardia: frecuencia del pulso superior a 100 latidos por minuto</td></tr>
 </table>
-<br>
 <table id="taquicardia-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
@@ -1222,10 +990,10 @@ Transfiera a la Sala de Emergencias tan pronto como sea posible
 <strong style="color: #ffffff;">El paciente puede desarrollar hipotensión</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table id="taquicardia-eval-sintomas" style="border-collapse: collapse; width: 100%;">
@@ -1236,10 +1004,10 @@ Transfiera a la Sala de Emergencias tan pronto como sea posible
 <strong style="color: #ffffff;">El paciente no tolera el ritmo</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table id="taquicardia-eval-ritmo" style="border-collapse: collapse; width: 100%;">
@@ -1299,7 +1067,6 @@ Transfiera a la Sala de Emergencias tan pronto como sea posible
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Hipotensión: disminución de la presión arterial sistólica a menos de 80 mm de Hg</td></tr>
 </table>
-<br>
 <table id="hipotension-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #f97316; font-size: 0.85em; line-height: 1.35;">
@@ -1311,10 +1078,10 @@ Transfiera a la Sala de Emergencias tan pronto como sea posible
 <strong style="color: #ffffff;">El paciente puede dejar de responder</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table id="hipotension-severidad" style="border-collapse: collapse; width: 100%;">
@@ -1366,7 +1133,6 @@ Transfiera al paciente a la Sala de Emergencias
 <table style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #ffffff;">Reacción Alérgica Leve: picazón, erupción o urticaria secundaria a reacción a medicamentos administrados</td></tr>
 </table>
-<br>
 <table id="alergia-leve-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #facc15; font-size: 0.85em; line-height: 1.35;">
@@ -1377,10 +1143,10 @@ Transfiera al paciente a la Sala de Emergencias
 <strong>Urticaria</strong>
 </td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table id="alergia-leve-complicaciones" style="border-collapse: collapse; width: 100%;">
@@ -1425,7 +1191,6 @@ Reacción Alérgica Severa: además de erupción cutánea o urticaria, el pacien
 Anafilaxia: reacción alérgica severa con compromiso de la vía aérea e hipotensión; esta es una emergencia catastrófica que requiere traslado inmediato a un centro médico
 </td></tr>
 </table>
-<br>
 <table id="alergia-severa-sintomas" style="border-collapse: collapse; width: 100%;">
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 1.05em; text-align: center; font-style: italic; background-color: #ffffff;">Síntomas</td></tr>
 <tr><td style="border: 2px solid #000; padding: 8px; background-color: #facc15; font-size: 0.85em; line-height: 1.35;">
@@ -1476,10 +1241,7 @@ Administre <span style="color: #93c5fd; font-weight: bold;">Benadryl 50 mg IM</s
 ## Evaluación del Paciente con Alteración del Estado Mental
 
 <table style="border-collapse: separate; border-spacing: 70px 0; width: 100%; table-layout: fixed;">
-<colgroup>
-<col style="width: 40%">
-<col style="width: 60%">
-</colgroup>
+<colgroup><col style="width: 40%"><col style="width: 60%"></colgroup>
 <tr>
 <td style="vertical-align: top; padding: 0;">
 <table id="mental-box" style="border-collapse: collapse; width: 100%;">
@@ -1488,10 +1250,10 @@ Administre <span style="color: #93c5fd; font-weight: bold;">Benadryl 50 mg IM</s
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.95em; font-style: italic; background-color: #facc15;">2. Trastorno Metabólico</td></tr>
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.95em; font-style: italic; background-color: #f97316;">3. Evento Neurológico</td></tr>
 </table>
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 <table style="border-collapse: collapse; width: 100%;">
@@ -1549,7 +1311,7 @@ El déficit suele ser focal con pérdida de sensibilidad o función motora de ex
 El habla puede verse afectada
 </td>
 </tr>
-<tr>
+<tr id="mental-convulsion-row">
 <td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.88em; background-color: #f97316; vertical-align: top;">Convulsión</td>
 <td style="border: 2px solid #000; padding: 6px 8px; font-size: 0.85em; line-height: 1.35; background-color: #f97316;">
 El paciente suele tener antecedentes de convulsiones<br>
@@ -1579,10 +1341,10 @@ El paciente suele despertarse lentamente después de la convulsión
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.95em; font-style: italic; background-color: #84cc16;">Desmayo Simple (Síncope Vasovagal)</td></tr>
 </table>
 
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 
@@ -1611,10 +1373,10 @@ El paciente suele despertarse lentamente después de la convulsión
 </td></tr>
 </table>
 
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 
@@ -1645,10 +1407,10 @@ El paciente suele despertarse lentamente después de la convulsión
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.95em; font-style: italic; background-color: #facc15;">Hipoglucemia</td></tr>
 </table>
 
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 
@@ -1677,10 +1439,10 @@ El paciente suele despertarse lentamente después de la convulsión
 </td></tr>
 </table>
 
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 
@@ -1714,10 +1476,10 @@ El paciente suele despertarse lentamente después de la convulsión
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.95em; font-style: italic; background-color: #f97316;">Accidente Cerebrovascular</td></tr>
 </table>
 
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 
@@ -1745,10 +1507,10 @@ El paciente suele despertarse lentamente después de la convulsión
 </td></tr>
 </table>
 
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 
@@ -1780,10 +1542,10 @@ El paciente suele despertarse lentamente después de la convulsión
 <tr><td style="border: 2px solid #000; padding: 6px 8px; font-weight: bold; font-size: 0.95em; font-style: italic; background-color: #f97316;">Convulsión</td></tr>
 </table>
 
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 
@@ -1812,10 +1574,10 @@ El paciente suele despertarse lentamente después de la convulsión
 </td></tr>
 </table>
 
-<div style="display: flex; justify-content: center; margin: 8px 0;">
-<svg width="20" height="38" viewBox="0 0 20 38">
-<line x1="10" y1="0" x2="10" y2="26" stroke="black" stroke-width="3"/>
-<polygon points="3,24 10,36 17,24" fill="black"/>
+<div style="display: flex; justify-content: center; margin: 2px 0;">
+<svg width="14" height="18" viewBox="0 0 14 18">
+<line x1="7" y1="0" x2="7" y2="11" stroke="black" stroke-width="2.5"/>
+<polygon points="2,10 7,17 12,10" fill="black"/>
 </svg>
 </div>
 

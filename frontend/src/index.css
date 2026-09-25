@@ -1,2 +1,26 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+/* Estilos compactos para diagramas de flujo y tablas en protocolos */
+.prose table {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.prose table + table {
+  margin-top: 8px !important;
+}
+
+.prose td, .prose th {
+  padding: 4px 6px !important;
+}
+
+.prose p {
+  margin-top: 3px !important;
+  margin-bottom: 3px !important;
+}
+
+.prose hr {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
