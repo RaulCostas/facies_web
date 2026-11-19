@@ -55,6 +55,9 @@ function App() {
 
       if (res.ok) {
         const data = await res.json();
+        if (data.role) {
+          sessionStorage.setItem('facies_user_role', data.role);
+        }
         if (data.isEditor) {
           sessionStorage.setItem('facies_is_editor', 'true');
         } else {
@@ -73,6 +76,7 @@ function App() {
     sessionStorage.removeItem('facies_auth');
     sessionStorage.removeItem('facies_user_email');
     sessionStorage.removeItem('facies_is_editor');
+    sessionStorage.removeItem('facies_user_role');
     window.history.pushState(null, '', '/login');
     setIsAuthenticated(false);
   };

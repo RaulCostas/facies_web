@@ -813,6 +813,9 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
   const [isEditor, setIsEditor] = useState<boolean>(() => {
     return sessionStorage.getItem('facies_is_editor') === 'true';
   });
+  const [userRole, setUserRole] = useState<string>(() => {
+    return sessionStorage.getItem('facies_user_role') || 'VIEWER';
+  });
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [saveMessage, setSaveMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
@@ -842,6 +845,10 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
       })
         .then((res) => res.json())
         .then((data) => {
+          if (data.role) {
+            setUserRole(data.role);
+            sessionStorage.setItem('facies_user_role', data.role);
+          }
           if (data.isEditor) {
             setIsEditor(true);
             sessionStorage.setItem('facies_is_editor', 'true');
@@ -871,6 +878,8 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
         // Si el usuario actual es a quien se le cambió el rol, actualizar su estado local
         const currentUserEmail = sessionStorage.getItem('facies_user_email');
         if (currentUserEmail && currentUserEmail.toLowerCase() === userEmail.toLowerCase()) {
+          setUserRole(newRole);
+          sessionStorage.setItem('facies_user_role', newRole);
           const isNowEditor = newRole === 'EDITOR';
           setIsEditor(isNowEditor);
           if (isNowEditor) sessionStorage.setItem('facies_is_editor', 'true');
@@ -1206,6 +1215,12 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
     };
   }, [activeSlideIndex, computeArrows]);
 
+  const isUserAdmin =
+    userRole === 'ADMIN' ||
+    ['raul@gmail.com', 'raul@gmail', 'raulcostas@gmail.com', 'admin@faciesdentium.com'].includes(
+      (sessionStorage.getItem('facies_user_email') || '').toLowerCase()
+    );
+
   return (
     <div className="min-h-screen bg-slate-50 py-4 sm:py-8 px-2 sm:px-4 md:px-6 font-sans">
       <div className="max-w-6xl mx-auto space-y-5">
@@ -1226,19 +1241,21 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap justify-center sm:justify-end">
-              <button
-                onClick={() => {
-                  setShowAdminModal(true);
-                  if (isAdminAuthenticated) {
-                    handleRefreshUsers();
-                  }
-                }}
-                className="bg-blue-500/80 hover:bg-blue-800 text-xs font-semibold px-3.5 py-2 rounded-full border border-blue-300 text-white shadow-sm whitespace-nowrap cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-1.5"
-                title="Panel de Acceso Privado"
-              >
-                <span>🔒</span>
-                <span>Acceso Privado</span>
-              </button>
+              {isUserAdmin && (
+                <button
+                  onClick={() => {
+                    setShowAdminModal(true);
+                    if (isAdminAuthenticated) {
+                      handleRefreshUsers();
+                    }
+                  }}
+                  className="bg-blue-500/80 hover:bg-blue-800 text-xs font-semibold px-3.5 py-2 rounded-full border border-blue-300 text-white shadow-sm whitespace-nowrap cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-1.5"
+                  title="Panel de Acceso Privado"
+                >
+                  <span>🔒</span>
+                  <span>Acceso Privado</span>
+                </button>
+              )}
 
               <button
                 onClick={() => {
