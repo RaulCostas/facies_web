@@ -7,7 +7,6 @@ export class AuthService {
   private transporter: nodemailer.Transporter;
 
   constructor(private prisma: PrismaService) {
-    // Usaremos Ethereal para pruebas iniciales como acordamos
     nodemailer.createTestAccount().then((account) => {
       this.transporter = nodemailer.createTransport({
         host: account.smtp.host,
@@ -22,27 +21,50 @@ export class AuthService {
     });
   }
 
+  private getDefaultAdminEmails(): string[] {
+    return (process.env.ADMIN_EMAILS || 'raul@gmail.com,raul@gmail,raulcostas@gmail.com,admin@faciesdentium.com')
+      .split(',')
+      .map((e) => e.trim().toLowerCase());
+  }
+
   async sendMagicLink(email: string) {
     try {
-      // 1. Guardar o encontrar el usuario en la BD de forma inmediata
-      const user = await this.prisma.user.upsert({
-        where: { email },
-        update: {},
-        create: { email },
+      const normalizedEmail = email.trim().toLowerCase();
+      const defaultAdmins = this.getDefaultAdminEmails();
+      const isDefaultAdmin = defaultAdmins.includes(normalizedEmail);
+
+      let user = await this.prisma.user.findUnique({
+        where: { email: normalizedEmail },
       });
 
-      // 2. Generar un link mágico simulado
+      if (!user) {
+        user = await this.prisma.user.create({
+          data: {
+            email: normalizedEmail,
+            role: isDefaultAdmin ? 'ADMIN' : 'VIEWER',
+          },
+        });
+      } else if (isDefaultAdmin && user.role !== 'ADMIN') {
+        user = await this.prisma.user.update({
+          where: { email: normalizedEmail },
+          data: { role: 'ADMIN' },
+        });
+      }
+
+      const isEditor = user.role === 'ADMIN' || user.role === 'EDITOR' || isDefaultAdmin;
+
+      // Generar link mágico simulado
       const mockToken = Buffer.from(user.id).toString('base64');
       const magicLink = `http://localhost:5173/auth/verify?token=${mockToken}`;
 
-      // 3. Enviar correo en segundo plano (asíncrono sin bloquear la respuesta al usuario)
       if (this.transporter) {
-        this.transporter.sendMail({
-          from: '"Facies Dentium" <no-reply@faciesdentium.com>',
-          to: email,
-          subject: 'Tu enlace de acceso a Protocolos Clínicos',
-          text: `Hola, ingresa a la plataforma usando el siguiente enlace: ${magicLink}`,
-          html: `
+        this.transporter
+          .sendMail({
+            from: '"Facies Dentium" <no-reply@faciesdentium.com>',
+            to: normalizedEmail,
+            subject: 'Tu enlace de acceso a Protocolos Clínicos',
+            text: `Hola, ingresa a la plataforma usando el siguiente enlace: ${magicLink}`,
+            html: `
             <div style="font-family: sans-serif; text-align: center; padding: 40px; background-color: #f9f9f9;">
               <h1 style="color: #2563eb;">FACIES DENTIUM</h1>
               <p>Has solicitado acceso a los Protocolos Clínicos.</p>
@@ -52,23 +74,46 @@ export class AuthService {
               <p style="margin-top: 30px; font-size: 12px; color: #6b7280;">Este enlace expirará pronto.</p>
             </div>
           `,
-        }).then((info) => {
-          console.log('Mensaje enviado: %s', info.messageId);
-        }).catch((err) => {
-          console.warn('Advertencia al enviar correo en segundo plano:', err.message);
-        });
+          })
+          .then((info) => {
+            console.log('Mensaje enviado: %s', info.messageId);
+          })
+          .catch((err) => {
+            console.warn('Advertencia al enviar correo en segundo plano:', err.message);
+          });
       }
 
-      // Retornar respuesta inmediata al frontend en < 10ms
       return {
         success: true,
         message: 'Acceso concedido exitosamente',
-        userId: user.id
+        userId: user.id,
+        email: user.email,
+        role: user.role,
+        isEditor,
       };
     } catch (error) {
       console.error(error);
       throw new InternalServerErrorException('Error al procesar el acceso');
     }
+  }
+
+  async checkEditorStatus(email: string) {
+    if (!email) return { isEditor: false, role: 'VIEWER' };
+    const normalizedEmail = email.trim().toLowerCase();
+    const defaultAdmins = this.getDefaultAdminEmails();
+    const isDefaultAdmin = defaultAdmins.includes(normalizedEmail);
+
+    const user = await this.prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
+
+    const isEditor =
+      (user && (user.role === 'ADMIN' || user.role === 'EDITOR')) || isDefaultAdmin;
+
+    return {
+      isEditor: Boolean(isEditor),
+      role: user?.role || (isDefaultAdmin ? 'ADMIN' : 'VIEWER'),
+    };
   }
 
   async getUsersList(password: string) {
@@ -78,11 +123,30 @@ export class AuthService {
 
     return this.prisma.user.findMany({
       select: {
+        id: true,
         email: true,
+        role: true,
         createdAt: true,
       },
       orderBy: {
         createdAt: 'desc',
+      },
+    });
+  }
+
+  async toggleUserRole(password: string, email: string, role: string) {
+    if (password !== 'admin123') {
+      throw new UnauthorizedException('Contraseña incorrecta');
+    }
+
+    return this.prisma.user.update({
+      where: { email },
+      data: { role },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        createdAt: true,
       },
     });
   }

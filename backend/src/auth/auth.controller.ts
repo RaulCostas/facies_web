@@ -13,8 +13,22 @@ export class AuthController {
     return this.authService.sendMagicLink(email);
   }
 
+  @Post('check-editor')
+  async checkEditor(@Body('email') email: string) {
+    return this.authService.checkEditorStatus(email);
+  }
+
   @Post('admin/users')
   async getAdminUsers(@Body('password') password: string) {
     return this.authService.getUsersList(password);
+  }
+
+  @Post('admin/toggle-role')
+  async toggleRole(
+    @Body('password') password: string,
+    @Body('email') email: string,
+    @Body('role') role: string,
+  ) {
+    return this.authService.toggleUserRole(password, email, role);
   }
 }

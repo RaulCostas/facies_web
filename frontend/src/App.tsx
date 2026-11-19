@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import Protocols from './Protocols'
-import logoImg from './assets/logo.jpg'
+import React, { useState, useEffect } from 'react';
+import Protocols from './Protocols';
+import logoImg from './assets/logo.jpg';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -36,26 +36,34 @@ function App() {
     e.preventDefault();
     if (!email) return;
     setIsSubmitting(true);
-    
+
+    const cleanEmail = email.trim().toLowerCase();
+
     // Autenticar de forma inmediata
     sessionStorage.setItem('facies_auth', 'true');
-    sessionStorage.setItem('facies_user_email', email);
-    
+    sessionStorage.setItem('facies_user_email', cleanEmail);
+
     // Cambiar URL inmediatamente a /inicio
     window.history.pushState(null, '', '/inicio');
-    
+
     try {
-      // Notificar al backend en segundo plano
-      fetch(`${API_URL}/auth/login`, {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      }).catch(err => console.warn('Sync backend:', err));
-      
-      setIsSubmitting(false);
-      setIsAuthenticated(true);
+        body: JSON.stringify({ email: cleanEmail }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.isEditor) {
+          sessionStorage.setItem('facies_is_editor', 'true');
+        } else {
+          sessionStorage.removeItem('facies_is_editor');
+        }
+      }
     } catch (error) {
-      console.error('Error:', error);
+      console.warn('Sync backend:', error);
+    } finally {
       setIsSubmitting(false);
       setIsAuthenticated(true);
     }
@@ -64,6 +72,7 @@ function App() {
   const handleLogout = () => {
     sessionStorage.removeItem('facies_auth');
     sessionStorage.removeItem('facies_user_email');
+    sessionStorage.removeItem('facies_is_editor');
     window.history.pushState(null, '', '/login');
     setIsAuthenticated(false);
   };
@@ -124,7 +133,7 @@ function App() {
         © {new Date().getFullYear()} Facies Dentium. Todos los derechos reservados.
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

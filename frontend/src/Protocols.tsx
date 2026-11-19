@@ -809,6 +809,16 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
   const articleRef = useRef<HTMLElement>(null);
   const modalScrollRef = useRef<HTMLDivElement>(null);
 
+  // Editor states
+  const [isEditor, setIsEditor] = useState<boolean>(() => {
+    return sessionStorage.getItem('facies_is_editor') === 'true';
+  });
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [saveMessage, setSaveMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+  const [renderKey, setRenderKey] = useState<number>(0);
+  const [showDiscardConfirm, setShowDiscardConfirm] = useState<boolean>(false);
+
   // Search filter in dashboard
   const [protocolSearch, setProtocolSearch] = useState('');
 
@@ -817,9 +827,60 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
   const [adminPassword, setAdminPassword] = useState('');
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [adminError, setAdminError] = useState('');
-  const [usersList, setUsersList] = useState<Array<{ email: string; createdAt: string }>>([]);
+  const [usersList, setUsersList] = useState<Array<{ id?: string; email: string; role?: string; createdAt: string }>>([]);
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Verificar estado de editor al cargar
+  useEffect(() => {
+    const userEmail = sessionStorage.getItem('facies_user_email');
+    if (userEmail) {
+      fetch(`${API_URL}/auth/check-editor`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userEmail }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.isEditor) {
+            setIsEditor(true);
+            sessionStorage.setItem('facies_is_editor', 'true');
+          } else {
+            setIsEditor(false);
+            sessionStorage.removeItem('facies_is_editor');
+          }
+        })
+        .catch((err) => console.warn('Error verificando editor:', err));
+    }
+  }, []);
+
+  const handleToggleUserRole = async (userEmail: string, currentRole?: string) => {
+    const newRole = currentRole === 'EDITOR' || currentRole === 'ADMIN' ? 'VIEWER' : 'EDITOR';
+    try {
+      const res = await fetch(`${API_URL}/auth/admin/toggle-role`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          password: adminPassword,
+          email: userEmail,
+          role: newRole,
+        }),
+      });
+      if (res.ok) {
+        handleRefreshUsers();
+        // Si el usuario actual es a quien se le cambió el rol, actualizar su estado local
+        const currentUserEmail = sessionStorage.getItem('facies_user_email');
+        if (currentUserEmail && currentUserEmail.toLowerCase() === userEmail.toLowerCase()) {
+          const isNowEditor = newRole === 'EDITOR';
+          setIsEditor(isNowEditor);
+          if (isNowEditor) sessionStorage.setItem('facies_is_editor', 'true');
+          else sessionStorage.removeItem('facies_is_editor');
+        }
+      }
+    } catch (err) {
+      console.error('Error al cambiar rol:', err);
+    }
+  };
 
   const handleAdminAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -898,32 +959,112 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
   }, []);
 
   useEffect(() => {
-    const fetchProtocols = () => {
-      fetch(`/protocolos_traducidos.md?t=${new Date().getTime()}`)
-        .then(res => {
-          if (!res.ok) {
-            return fetch(`/api/protocolos?t=${new Date().getTime()}`).then(r => r.text());
-          }
-          return res.text();
-        })
-        .then(text => {
-          const parsed = extractSlides(text);
-          setSlides(parsed);
+    const fetchProtocols = async () => {
+      try {
+        const mdRes = await fetch(`/protocolos_traducidos.md?t=${new Date().getTime()}`);
+        const mdText = mdRes.ok ? await mdRes.text() : await (await fetch(`/api/protocolos?t=${new Date().getTime()}`)).text();
+        const parsed = extractSlides(mdText);
 
-          // Check if there is a hash matching a slide ID
-          const hash = window.location.hash.replace('#', '');
-          if (hash && parsed.length > 0) {
-            const foundIdx = parsed.findIndex(s => s.id === hash);
-            if (foundIdx !== -1) {
-              setActiveSlideIndex(foundIdx);
+        try {
+          const dbRes = await fetch(`${API_URL}/protocols`);
+          if (dbRes.ok) {
+            const dbList: Array<{ id: string; title?: string; content: string }> = await dbRes.json();
+            if (Array.isArray(dbList) && dbList.length > 0) {
+              const dbMap = new Map(dbList.map(p => [p.id, p]));
+              parsed.forEach(slide => {
+                const override = dbMap.get(slide.id);
+                if (override && override.content) {
+                  slide.content = override.content;
+                  if (override.title) slide.title = override.title;
+                }
+              });
             }
           }
-        })
-        .catch(err => console.error('Error cargando protocolos:', err));
+        } catch (dbErr) {
+          console.warn('No se pudieron cargar protocolos de la base de datos:', dbErr);
+        }
+
+        setSlides(parsed);
+
+        // Check if there is a hash matching a slide ID
+        const hash = window.location.hash.replace('#', '');
+        if (hash && parsed.length > 0) {
+          const foundIdx = parsed.findIndex(s => s.id === hash);
+          if (foundIdx !== -1) {
+            setActiveSlideIndex(foundIdx);
+          }
+        }
+      } catch (err) {
+        console.error('Error cargando protocolos:', err);
+      }
     };
 
     fetchProtocols();
   }, []);
+
+  const currentSlide = activeSlideIndex !== null ? slides[activeSlideIndex] : null;
+
+  const handleSaveSlideContent = async (): Promise<boolean> => {
+    if (!articleRef.current || !currentSlide) return false;
+    setIsSaving(true);
+    setSaveMessage(null);
+    try {
+      const newContent = articleRef.current.innerHTML;
+      const userEmail = sessionStorage.getItem('facies_user_email') || 'editor@faciesdentium.com';
+      
+      const res = await fetch(`${API_URL}/protocols/${currentSlide.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: newContent,
+          title: currentSlide.title,
+          userEmail
+        })
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || 'Error al guardar los cambios');
+      }
+
+      // Actualizar slide en el estado local
+      setSlides(prev => prev.map((s, idx) => 
+        idx === activeSlideIndex ? { ...s, content: newContent } : s
+      ));
+
+      setIsEditing(false);
+      setSaveMessage({ text: '¡Cambios guardados con éxito!', type: 'success' });
+      setTimeout(() => setSaveMessage(null), 3500);
+      setTimeout(() => computeArrows(), 100);
+      return true;
+    } catch (err: any) {
+      setSaveMessage({ text: err.message || 'Error al guardar', type: 'error' });
+      return false;
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setSaveMessage(null);
+    setRenderKey(prev => prev + 1); // Forzar re-renderizado con el contenido original
+    setTimeout(() => computeArrows(), 100);
+  };
+
+  const applyFormat = (command: string, value: string | undefined = undefined) => {
+    if (!isEditing || !articleRef.current) return;
+    if (command === 'hiliteColor') {
+      try {
+        document.execCommand('hiliteColor', false, value);
+      } catch {
+        document.execCommand('backColor', false, value);
+      }
+    } else {
+      document.execCommand(command, false, value);
+    }
+    setTimeout(() => computeArrows(), 50);
+  };
 
   // Centralized slide navigation ensuring URL hash and state remain in sync
   const goToSlide = useCallback((idx: number) => {
@@ -963,10 +1104,59 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [slides, activeSlideIndex]);
 
+  // Prevenir recarga o cierre accidental de pestaña si está en edición
+  useEffect(() => {
+    if (!isEditing) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isEditing]);
+
   // Keyboard navigation for open modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (showAdminModal) return;
+
+      if (showDiscardConfirm) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          setShowDiscardConfirm(false);
+        }
+        return;
+      }
+
+      // Si está en modo edición
+      if (isEditing) {
+        // Interceptar F5 o Ctrl+R para advertir antes de recargar
+        if (e.key === 'F5' || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r')) {
+          e.preventDefault();
+          setShowDiscardConfirm(true);
+          return;
+        }
+
+        // Guardar y cerrar con Ctrl+S
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+          e.preventDefault();
+          handleSaveSlideContent().then((ok) => {
+            if (ok) closeProtocolModal();
+          });
+          return;
+        }
+
+        // Esc para abrir confirmación de descarte
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          setShowDiscardConfirm(true);
+          return;
+        }
+        return; // No interferir con flechas mientras el usuario edita texto
+      }
+
       if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
 
       if (activeSlideIndex !== null && slides.length > 0) {
@@ -989,7 +1179,7 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [slides, showAdminModal, activeSlideIndex, goToSlide, closeProtocolModal]);
+  }, [slides, showAdminModal, activeSlideIndex, goToSlide, closeProtocolModal, isEditing, currentSlide, showDiscardConfirm]);
 
   // Recompute arrows when modal slide changes
   useEffect(() => {
@@ -1015,8 +1205,6 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
       resizeObserver.disconnect();
     };
   }, [activeSlideIndex, computeArrows]);
-
-  const currentSlide = activeSlideIndex !== null ? slides[activeSlideIndex] : null;
 
   return (
     <div className="min-h-screen bg-slate-50 py-4 sm:py-8 px-2 sm:px-4 md:px-6 font-sans">
@@ -1213,9 +1401,51 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
 
               {/* Botones de Control del Modal */}
               <div className="flex items-center gap-2 shrink-0">
+                {/* Botón de Edición para Editores */}
+                {isEditor && !isEditing && (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-2xs flex items-center gap-1.5 transition-all cursor-pointer hover:scale-105 active:scale-95"
+                    title="Editar el texto de esta tarjeta"
+                  >
+                    <span>✏️</span>
+                    <span className="hidden sm:inline">Editar Tarjeta</span>
+                  </button>
+                )}
+
+                {/* Acciones durante edición */}
+                {isEditing && (
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={async () => {
+                        const ok = await handleSaveSlideContent();
+                        if (ok) closeProtocolModal();
+                      }}
+                      disabled={isSaving}
+                      className="px-3 sm:px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
+                      title="Guardar cambios y cerrar (Ctrl+S)"
+                    >
+                      <span>💾</span>
+                      <span>{isSaving ? 'Guardando...' : 'Guardar'}</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleCancelEdit();
+                        closeProtocolModal();
+                      }}
+                      disabled={isSaving}
+                      className="px-2.5 sm:px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 rounded-xl text-xs font-semibold border border-slate-300 shadow-2xs flex items-center gap-1 transition-all cursor-pointer"
+                      title="Descartar cambios y cerrar"
+                    >
+                      <span>✕</span>
+                      <span className="hidden sm:inline">Descartar</span>
+                    </button>
+                  </div>
+                )}
+
                 <button
                   onClick={() => goToSlide(activeSlideIndex - 1)}
-                  disabled={activeSlideIndex === 0}
+                  disabled={activeSlideIndex === 0 || isEditing}
                   className="p-2 bg-white/80 hover:bg-white text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer"
                   title={activeSlideIndex > 0 ? `Protocolo Anterior: ${slides[activeSlideIndex - 1].title}` : 'Primer Protocolo'}
                 >
@@ -1226,7 +1456,7 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
 
                 <button
                   onClick={() => goToSlide(activeSlideIndex + 1)}
-                  disabled={activeSlideIndex === slides.length - 1}
+                  disabled={activeSlideIndex === slides.length - 1 || isEditing}
                   className="p-2 bg-white/80 hover:bg-white text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer"
                   title={activeSlideIndex < slides.length - 1 ? `Siguiente Protocolo: ${slides[activeSlideIndex + 1].title}` : 'Último Protocolo'}
                 >
@@ -1236,7 +1466,13 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
                 </button>
 
                 <button
-                  onClick={closeProtocolModal}
+                  onClick={() => {
+                    if (isEditing) {
+                      setShowDiscardConfirm(true);
+                    } else {
+                      closeProtocolModal();
+                    }
+                  }}
                   className="p-2 bg-white hover:bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl border border-slate-300 shadow-2xs transition-all cursor-pointer ml-1"
                   title="Cerrar (Esc)"
                 >
@@ -1248,12 +1484,331 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
             </div>
 
             {/* Cuerpo del Modal con Contenido Markdown y Flechas SVG */}
-            <div ref={modalScrollRef} className="overflow-y-auto px-4 sm:px-6 md:px-8 pt-2 pb-6 flex-1 bg-white">
+            <div ref={modalScrollRef} className="overflow-y-auto px-4 sm:px-6 md:px-8 pt-3 pb-6 flex-1 bg-white">
+              {/* Notificación o Banner de Modo Edición */}
+              {isEditing && (
+                <div className="bg-amber-50 border border-amber-300 text-amber-900 px-4 py-2.5 text-xs rounded-xl mb-3 flex items-center justify-between shadow-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">📝</span>
+                    <span>
+                      <strong>Modo Edición activo:</strong> Haz clic directamente sobre cualquier texto o celda de la tarjeta para modificar su contenido.
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-amber-700 hidden md:inline font-mono">
+                    Ctrl + S para guardar
+                  </span>
+                </div>
+              )}
+
+              {/* Barra de Herramientas de Formato de Texto (Rich Text Toolbar) */}
+              {isEditing && (
+                <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border border-slate-200 shadow-md rounded-2xl p-2 mb-3.5 space-y-2 animate-in fade-in duration-150">
+                  {/* Fila 1: Indicador informativo rápido */}
+                  <div className="flex items-center justify-between text-xs text-slate-500 pb-1.5 border-b border-slate-100 px-1">
+                    <div className="flex items-center gap-1.5 font-medium text-blue-700">
+                      <span>🎨</span>
+                      <span>Herramientas de texto: selecciona una palabra o frase y pulsa cualquier formato</span>
+                    </div>
+                    <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
+                      Ctrl+B (Negrita) · Ctrl+I (Cursiva) · Ctrl+U (Subrayado)
+                    </span>
+                  </div>
+
+                  {/* Fila 2: Botones de herramientas */}
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {/* Deshacer / Rehacer */}
+                    <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-0.5 shadow-2xs">
+                      <button
+                        type="button"
+                        title="Deshacer (Ctrl+Z)"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('undo');
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h10a5 5 0 015 5v2m-15-7l4-4m-4 4l4 4" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        title="Rehacer (Ctrl+Y)"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('redo');
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 10H11a5 5 0 00-5 5v2m15-7l-4-4m4 4l-4 4" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div className="h-5 w-px bg-slate-200 mx-0.5 hidden sm:block" />
+
+                    {/* Formato de Bloque / Tamaño */}
+                    <select
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val) {
+                          applyFormat('formatBlock', val);
+                          e.target.value = '';
+                        }
+                      }}
+                      defaultValue=""
+                      className="text-xs bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl px-2.5 py-1.5 cursor-pointer focus:outline-none font-medium shadow-2xs"
+                      title="Estilo de párrafo / encabezado"
+                    >
+                      <option value="" disabled>Formato...</option>
+                      <option value="<p>">Texto Normal</option>
+                      <option value="<h2>">Título Principal (H2)</option>
+                      <option value="<h3>">Subtítulo Grande (H3)</option>
+                      <option value="<h4>">Subtítulo Pequeño (H4)</option>
+                    </select>
+
+                    <div className="h-5 w-px bg-slate-200 mx-0.5 hidden sm:block" />
+
+                    {/* Estilos de Texto: Negrita, Cursiva, Subrayado, Tachado */}
+                    <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-0.5 shadow-2xs">
+                      <button
+                        type="button"
+                        title="Negrita (Ctrl+B)"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('bold');
+                        }}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white text-slate-800 font-bold font-serif text-sm transition-colors cursor-pointer"
+                      >
+                        B
+                      </button>
+                      <button
+                        type="button"
+                        title="Cursiva (Ctrl+I)"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('italic');
+                        }}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white text-slate-800 italic font-serif text-sm transition-colors cursor-pointer"
+                      >
+                        I
+                      </button>
+                      <button
+                        type="button"
+                        title="Subrayado (Ctrl+U)"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('underline');
+                        }}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white text-slate-800 underline font-serif text-sm transition-colors cursor-pointer"
+                      >
+                        U
+                      </button>
+                      <button
+                        type="button"
+                        title="Tachado"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('strikeThrough');
+                        }}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white text-slate-800 line-through font-serif text-sm transition-colors cursor-pointer"
+                      >
+                        S
+                      </button>
+                    </div>
+
+                    <div className="h-5 w-px bg-slate-200 mx-0.5 hidden sm:block" />
+
+                    {/* Alineación */}
+                    <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-0.5 shadow-2xs">
+                      <button
+                        type="button"
+                        title="Alinear a la izquierda"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('justifyLeft');
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h10M4 18h14" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        title="Centrar texto"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('justifyCenter');
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M7 12h10M5 18h14" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        title="Alinear a la derecha"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('justifyRight');
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M10 12h10M6 18h14" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        title="Justificar texto"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('justifyFull');
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div className="h-5 w-px bg-slate-200 mx-0.5 hidden sm:block" />
+
+                    {/* Listas */}
+                    <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-0.5 shadow-2xs">
+                      <button
+                        type="button"
+                        title="Lista con viñetas"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('insertUnorderedList');
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h.01M9 6h11M4 12h.01M9 12h11M4 18h.01M9 18h11" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        title="Lista numerada"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('insertOrderedList');
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white text-slate-700 hover:text-slate-900 transition-colors cursor-pointer"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 6h1m-1 6h1m-1 6h1m4-12h14M7 12h14M7 18h14" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div className="h-5 w-px bg-slate-200 mx-0.5 hidden sm:block" />
+
+                    {/* Color de Fuente */}
+                    <div className="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2 py-1 shadow-2xs">
+                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mr-0.5">Texto:</span>
+                      {[
+                        { label: 'Negro', color: '#0f172a' },
+                        { label: 'Rojo clínico', color: '#dc2626' },
+                        { label: 'Naranja advertencia', color: '#ea580c' },
+                        { label: 'Azul', color: '#2563eb' },
+                        { label: 'Verde', color: '#16a34a' },
+                      ].map((c) => (
+                        <button
+                          key={c.color}
+                          type="button"
+                          title={`Color de texto: ${c.label}`}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            applyFormat('foreColor', c.color);
+                          }}
+                          className="w-4 h-4 rounded-full border border-slate-300 hover:scale-130 transition-transform cursor-pointer shadow-2xs"
+                          style={{ backgroundColor: c.color }}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Resaltador / Fondo */}
+                    <div className="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2 py-1 shadow-2xs">
+                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mr-0.5">Fondo:</span>
+                      {[
+                        { label: 'Amarillo suave', color: '#fef08a' },
+                        { label: 'Naranja suave', color: '#fed7aa' },
+                        { label: 'Rojo suave', color: '#fecaca' },
+                        { label: 'Verde suave', color: '#bbf7d0' },
+                      ].map((c) => (
+                        <button
+                          key={c.color}
+                          type="button"
+                          title={`Resaltar fondo: ${c.label}`}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            applyFormat('hiliteColor', c.color);
+                          }}
+                          className="w-4 h-4 rounded-sm border border-slate-300 hover:scale-130 transition-transform cursor-pointer shadow-2xs"
+                          style={{ backgroundColor: c.color }}
+                        />
+                      ))}
+                      <button
+                        type="button"
+                        title="Quitar color de fondo"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          applyFormat('hiliteColor', 'transparent');
+                        }}
+                        className="w-4 h-4 rounded-sm border border-dashed border-slate-400 bg-white hover:bg-slate-200 flex items-center justify-center text-[9px] text-slate-600 font-bold cursor-pointer"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    {/* Limpiar Formato */}
+                    <button
+                      type="button"
+                      title="Quitar todos los formatos del texto seleccionado"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        applyFormat('removeFormat');
+                      }}
+                      className="p-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 rounded-xl transition-colors cursor-pointer shadow-2xs flex items-center gap-1 text-xs font-medium"
+                    >
+                      <span>🧹</span>
+                      <span className="hidden md:inline text-[11px]">Limpiar</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {saveMessage && (
+                <div
+                  className={`px-4 py-2 text-xs rounded-xl mb-3 flex items-center gap-2 shadow-xs transition-all ${
+                    saveMessage.type === 'success'
+                      ? 'bg-emerald-50 border border-emerald-300 text-emerald-800'
+                      : 'bg-red-50 border border-red-300 text-red-800'
+                  }`}
+                >
+                  <span>{saveMessage.type === 'success' ? '✅' : '⚠️'}</span>
+                  <span className="font-semibold">{saveMessage.text}</span>
+                </div>
+              )}
+
               <div className="overflow-x-auto pb-4">
                 <div style={{ position: 'relative', minWidth: '680px' }}>
                   <article
+                    key={renderKey}
                     ref={articleRef}
-                    className="prose prose-blue prose-lg max-w-none prose-headings:font-bold prose-a:text-blue-600 prose-h2:mt-1 prose-h2:pt-0 prose-h2:mb-3 prose-h3:mt-3 prose-h3:mb-2 prose-p:my-1.5 prose-ul:my-1.5 prose-li:my-0.5"
+                    contentEditable={isEditing}
+                    suppressContentEditableWarning={true}
+                    onInput={() => computeArrows()}
+                    className={`prose prose-blue prose-lg max-w-none prose-headings:font-bold prose-a:text-blue-600 prose-h2:mt-1 prose-h2:pt-0 prose-h2:mb-3 prose-h3:mt-3 prose-h3:mb-2 prose-p:my-1.5 prose-ul:my-1.5 prose-li:my-0.5 outline-none transition-all ${
+                      isEditing ? 'ring-2 ring-blue-400 ring-offset-2 rounded-xl p-2 bg-blue-50/15' : ''
+                    }`}
                   >
                     <ReactMarkdown rehypePlugins={[rehypeRaw]}>{currentSlide.content}</ReactMarkdown>
                   </article>
@@ -1346,6 +1901,73 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================= */}
+      {/* Modal Emergente de Confirmación al Descartar Edición      */}
+      {/* ========================================================= */}
+      {showDiscardConfirm && (
+        <div 
+          onClick={() => setShowDiscardConfirm(false)}
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-[70] animate-in fade-in duration-150"
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200 animate-in zoom-in-95 duration-150"
+          >
+            <div className="p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-2xl shrink-0 shadow-2xs">
+                  ⚠️
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+                    ¿Descartar cambios no guardados?
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-500 mt-1.5 leading-relaxed">
+                    Estás editando esta tarjeta y tienes modificaciones sin guardar. Si sales ahora, se perderán todos los cambios que hayas realizado.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowDiscardConfirm(false)}
+                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs sm:text-sm font-semibold transition-colors cursor-pointer text-center"
+                >
+                  Continuar editando
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowDiscardConfirm(false);
+                    handleCancelEdit();
+                    closeProtocolModal();
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-semibold shadow-xs transition-all cursor-pointer text-center"
+                >
+                  Descartar y salir
+                </button>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    setShowDiscardConfirm(false);
+                    const ok = await handleSaveSlideContent();
+                    if (ok) closeProtocolModal();
+                  }}
+                  disabled={isSaving}
+                  className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer text-center disabled:opacity-50 flex items-center justify-center gap-1.5"
+                >
+                  <span>💾</span>
+                  <span>Guardar y salir</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1481,42 +2103,82 @@ export default function Protocols({ onLogout }: { onLogout?: () => void } = {}) 
                     </div>
                   </div>
 
-                  {/* Tabla de Usuarios */}
+                  {/* Tabla de Usuarios con Gestión de Roles */}
                   <div className="max-h-80 overflow-y-auto rounded-xl border border-gray-200 shadow-inner">
                     <table className="w-full text-left text-sm">
                       <thead className="bg-gray-50 text-gray-700 font-semibold text-xs uppercase tracking-wider sticky top-0 border-b border-gray-200">
                         <tr>
                           <th className="px-4 py-3">Email</th>
+                          <th className="px-3 py-3 text-center">Rol</th>
                           <th className="px-4 py-3">Fecha de Registro</th>
+                          <th className="px-4 py-3 text-right">Permiso Edición</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-100">
                         {usersList.filter(u => u.email.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 ? (
                           <tr>
-                            <td colSpan={2} className="px-4 py-8 text-center text-gray-400 text-sm">
+                            <td colSpan={4} className="px-4 py-8 text-center text-gray-400 text-sm">
                               {searchTerm ? 'No se encontraron correos con ese filtro' : 'No hay usuarios registrados aún'}
                             </td>
                           </tr>
                         ) : (
                           usersList
                             .filter(u => u.email.toLowerCase().includes(searchTerm.toLowerCase()))
-                            .map((u, idx) => (
-                              <tr key={idx} className="hover:bg-blue-50/50 transition-colors">
-                                <td className="px-4 py-3 font-medium text-gray-900 flex items-center gap-2">
-                                  <span className="text-blue-500">✉️</span>
-                                  <span>{u.email}</span>
-                                </td>
-                                <td className="px-4 py-3 text-gray-600 text-xs">
-                                  {new Date(u.createdAt).toLocaleString('es-ES', {
-                                    year: 'numeric',
-                                    month: 'short',
-                                    day: '2-digit',
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                  })}
-                                </td>
-                              </tr>
-                            ))
+                            .map((u, idx) => {
+                              const isUserAdmin = u.role === 'ADMIN' || ['raul@gmail.com', 'raul@gmail', 'raulcostas@gmail.com', 'admin@faciesdentium.com'].includes(u.email.toLowerCase());
+                              const isUserEditor = u.role === 'EDITOR' || isUserAdmin;
+
+                              return (
+                                <tr key={u.id || idx} className="hover:bg-blue-50/50 transition-colors">
+                                  <td className="px-4 py-3 font-medium text-gray-900 flex items-center gap-2">
+                                    <span className="text-blue-500">✉️</span>
+                                    <span className="truncate max-w-[200px]" title={u.email}>{u.email}</span>
+                                  </td>
+                                  <td className="px-3 py-3 text-center">
+                                    {isUserAdmin ? (
+                                      <span className="bg-purple-100 text-purple-800 text-[11px] font-bold px-2 py-0.5 rounded-full border border-purple-200">
+                                        ADMIN
+                                      </span>
+                                    ) : isUserEditor ? (
+                                      <span className="bg-blue-100 text-blue-800 text-[11px] font-bold px-2 py-0.5 rounded-full border border-blue-200">
+                                        EDITOR
+                                      </span>
+                                    ) : (
+                                      <span className="bg-gray-100 text-gray-600 text-[11px] font-medium px-2 py-0.5 rounded-full border border-gray-200">
+                                        LECTOR
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="px-4 py-3 text-gray-600 text-xs">
+                                    {new Date(u.createdAt).toLocaleString('es-ES', {
+                                      year: 'numeric',
+                                      month: 'short',
+                                      day: '2-digit',
+                                      hour: '2-digit',
+                                      minute: '2-digit',
+                                    })}
+                                  </td>
+                                  <td className="px-4 py-3 text-right">
+                                    {isUserAdmin ? (
+                                      <span className="text-xs text-purple-600 font-semibold italic">
+                                        Acceso Total
+                                      </span>
+                                    ) : (
+                                      <button
+                                        onClick={() => handleToggleUserRole(u.email, u.role)}
+                                        className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer border ${
+                                          isUserEditor
+                                            ? 'bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-300'
+                                            : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-300'
+                                        }`}
+                                      >
+                                        {isUserEditor ? 'Quitar Editor' : 'Hacer Editor'}
+                                      </button>
+                                    )}
+                                  </td>
+                                </tr>
+                              );
+                            })
                         )}
                       </tbody>
                     </table>
